@@ -24,7 +24,39 @@ def parse_po(text):
     msgstr = []
     in_msgid = False
     in_msgstr = False
+for line in text.split('\n'):
+        line = line.rstrip('\r')
+        if line.startswith('msgid '):
+            if in_msgstr:
+                messages.append((msgid, msgstr))
+                in_msgstr = False
+            # message start
+            in_msgid = True
 
+            msgid = [line[6:]]
+        elif line.startswith('msgstr '):
+            in_msgid = False
+            in_msgstr = True
+            msgstr = [line[7:]]
+        elif line.startswith('"'):
+            if in_msgid:
+                msgid.append(line)for line in text.split('\n'):
+        line = line.rstrip('\r')
+        if line.startswith('msgid '):
+            if in_msgstr:
+                messages.append((msgid, msgstr))
+                in_msgstr = False
+            # message start
+            in_msgid = True
+
+            msgid = [line[6:]]
+        elif line.startswith('msgstr '):
+            in_msgid = False
+            in_msgstr = True
+            msgstr = [line[7:]]
+        elif line.startswith('"'):
+            if in_msgid:
+                msgid.append(line)
     for line in text.split('\n'):
         line = line.rstrip('\r')
         if line.startswith('msgid '):
